@@ -6,7 +6,15 @@ defmodule BlackjackUmbrella.MixProject do
       apps_path: "apps",
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      releases: [
+        blackjack_umbrella: [
+          applications: [
+            blackjack: :permanent,
+            blackjack_server: :permanent
+          ]
+        ]
+      ]
     ]
   end
 
@@ -16,8 +24,6 @@ defmodule BlackjackUmbrella.MixProject do
   #
   # Run "mix help deps" for examples and options.
   defp deps do
-    [
-      {:mix_docker, "~> 0.5.0"}
-    ]
+    []
   end
 end

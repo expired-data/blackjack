@@ -8,13 +8,12 @@ defmodule BlackjackServer.Application do
   @impl true
   def start(_type, _args) do
     tcpPort = String.to_integer(System.get_env("TCP_PORT") || "4040")
-    httpPort = String.to_integer(System.get_env("HTTP_PORT") || "4041")
-    ip = List.to_tuple(for i <- String.split(System.get_env("HOST_IP") || "127.0.0.1", "."), do: elem(Integer.parse(i),0))
+    httpPort = String.to_integer(System.get_env("PORT") || "4041")
 
     children = [
       {Task.Supervisor, name: BlackjackServer.TaskSupervisor},
       Supervisor.child_spec({Task, fn -> BlackjackServer.accept(tcpPort) end}, restart: :permanent),
-      {Plug.Cowboy, scheme: :http, plug: BlackjackServer.Plug, options: [port: httpPort, ip: ip]},
+      {Plug.Cowboy, scheme: :http, plug: BlackjackServer.Plug, options: [port: httpPort, ip: {0,0,0,0}]},
       BlackjackServer.PIDAgent
     ]
 
