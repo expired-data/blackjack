@@ -4,7 +4,7 @@ defmodule Blackjack.Deck do
   defp getCards() do
     values = Enum.to_list(2..10) ++ ["Jack", "Queen", "King", "Ace"]
     suits = ["Spades", "Hearts", "Clubs", "Diamonds"]
-    for i <- values, j <- suits, do: {i, j}
+    for i <- values, j <- suits, _k <- 1..8, do: {i, j}
   end
 
   defp shuffleRecursive([h | _t], 1, result), do: [h | result]
