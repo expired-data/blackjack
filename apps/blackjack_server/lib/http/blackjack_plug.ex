@@ -3,7 +3,7 @@ defmodule BlackjackServer.Plug do
 
   @valid_secret String.duplicate("abcdef0123456789", 8)
 
-  plug Plug.Session, store: :cookie, key: "_plugger", secret: @valid_secret, signing_salt: "REEEE", encryption_salt: "REEE"
+  plug Plug.Session, store: :cookie, key: "_plugger", secret: @valid_secret, signing_salt: @valid_secret, encryption_salt: @valid_secret
 
   plug Plug.Static, from: :blackjack_server, at: "/react/"
   plug :match
