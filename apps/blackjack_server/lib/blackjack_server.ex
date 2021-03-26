@@ -37,8 +37,7 @@ defmodule BlackjackServer do
   end
 
   defp write_line(socket, {:ok, object}) do
-    {:ok, encoded} = JSON.encode(object)
-    :gen_tcp.send(socket, encoded)
+    :gen_tcp.send(socket, Blackjack.Hand.handString(object))
   end
 
   defp write_line(socket, {:error, :unknown_command}) do

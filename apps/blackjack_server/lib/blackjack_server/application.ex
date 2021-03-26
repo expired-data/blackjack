@@ -7,11 +7,14 @@ defmodule BlackjackServer.Application do
 
   @impl true
   def start(_type, _args) do
-    port = String.to_integer(System.get_env("PORT") || "4040")
+    tcpPort = String.to_integer(System.get_env("TCP_PORT") || "4040")
+    httpPort = String.to_integer(System.get_env("HTTP_PORT") || "4041")
 
     children = [
       {Task.Supervisor, name: BlackjackServer.TaskSupervisor},
-      Supervisor.child_spec({Task, fn -> BlackjackServer.accept(port) end}, restart: :permanent)
+      Supervisor.child_spec({Task, fn -> BlackjackServer.accept(tcpPort) end}, restart: :permanent),
+      {Plug.Cowboy, scheme: :http, plug: BlackjackServer.Plug, options: [port: httpPort, ip: {192,168,1,40}]},
+      BlackjackServer.PIDAgent
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

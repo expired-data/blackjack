@@ -25,11 +25,11 @@ defmodule Blackjack.Deck do
     Agent.start_link(fn -> shuffleDeck(getCards()) end, name: __MODULE__)
   end
 
-  defp getCard([hd | tl]), do: {hd, tl}
-
+  defp getCard([el] = _list), do: {el, []}
   defp getCard([]) do
     raise("No cards left in the deck")
   end
+  defp getCard([hd | tl]), do: {hd, tl}
 
   @doc """
   Gets a card from the deck
