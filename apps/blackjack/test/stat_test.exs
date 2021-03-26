@@ -18,4 +18,8 @@ defmodule Blackjack.StatTest do
     Blackjack.Stats.record_score(0, "test3")
     assert Blackjack.Stats.get("test3") == [games: 1, total: 0, busts: 1, average: 0]
   end
+
+  test "formats a stats string" do
+    assert Blackjack.Stats.statsString([games: 2, total: 21, busts: 1, average: 21]) == "You have played #{2} games, busting #{1} times, with an average score of #{21}"
+  end
 end

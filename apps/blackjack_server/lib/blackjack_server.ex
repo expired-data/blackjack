@@ -19,7 +19,7 @@ defmodule BlackjackServer do
   defp handle_connection(socket) do
     {:ok, pid} = Blackjack.Dealer.connect()
     Process.put(:dealer, pid)
-    write_line(socket, {:ok, Blackjack.Dealer.cards(pid)})
+    write_line(socket, {:ok, Blackjack.Dealer.cards(pid) |> Blackjack.Hand.handString})
   end
 
   defp serve(socket) do
@@ -36,8 +36,8 @@ defmodule BlackjackServer do
     :gen_tcp.recv(socket, 0)
   end
 
-  defp write_line(socket, {:ok, object}) do
-    :gen_tcp.send(socket, Blackjack.Hand.handString(object))
+  defp write_line(socket, {:ok, msg}) do
+    :gen_tcp.send(socket, msg)
   end
 
   defp write_line(socket, {:error, :unknown_command}) do

@@ -23,6 +23,11 @@ defmodule Blackjack.HandTest do
     assert Blackjack.Hand.handString([hand: [{"Ace", "Clubs"}, {"Ace", "Spades"}, {8, "Diamonds"}]]) == result
   end
 
+  test "tells a player they have bust if they go over 21" do
+    result = "Your current hand is 9C KS KD, this is worth 29 points. You have bust."
+    assert Blackjack.Hand.handString([hand: [{9, "Clubs"}, {"King", "Spades"}, {"King", "Diamonds"}]]) == result
+  end
+
   test "returns hand state for a given hand" do
     hand = [{"Ace", "Clubs"}, {"Ace", "Spades"}, {8, "Diamonds"}]
     assert Blackjack.Hand.handState(hand) == [hand: hand, value: 20]

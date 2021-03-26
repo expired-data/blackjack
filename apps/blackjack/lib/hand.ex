@@ -46,7 +46,13 @@ defmodule Blackjack.Hand do
 
   """
   def handString(handState) do
-    "Your current hand is#{getUnicode(handState[:hand])}, this is worth #{getValue(handState[:hand])} points."
+    points = getValue(handState[:hand])
+    str = "Your current hand is#{getUnicode(handState[:hand])}, this is worth #{points} points."
+    if points > 21 do
+      str <> " You have bust."
+    else
+      str
+    end
   end
 
   @doc """

@@ -34,4 +34,11 @@ defmodule Blackjack.Stats do
   def get(pid) do
     Agent.get(__MODULE__, fn stats -> stats[pid_to_string(pid)] end)
   end
+
+  @doc """
+  Formats stats to a nice string
+  """
+  def statsString(stats) do
+    "You have played #{stats[:games]} games, busting #{stats[:busts]} times, with an average score of #{stats[:average]}"
+  end
 end
